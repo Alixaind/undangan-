@@ -866,17 +866,36 @@ if (path.length > 0) {
 
       const templateMap = {
 
-        "Luxury Gold":
-          "/Template/Tema-adat/Wayang-01/index.html",
+  "wayang-01":
+    "/Template/Tema-adat/Wayang-01/index.html",
 
-        "Wayang 02":
-          "/Template/Tema-adat/Wayang-02/index.html"
+  "wayang-02":
+    "/Template/Tema-adat/Wayang-02/index.html",
 
-      };
+  "wayang-03":
+    "/Template/Tema-adat/Wayang-03/index.html",
 
-      const tujuan =
-        templateMap[data.template_style];
+  "luxury-01":
+    "/Template/Luxury-gold/luxury-01/index.html",
 
+  "luxury-02":
+    "/Template/Luxury-gold/luxury-02/index.html",
+
+  "luxury-03":
+    "/Template/Luxury-gold/luxury-03/index.html",
+
+  "minimal-01":
+    "/Template/minimalis/minimal-01/index.html",
+
+  "minimal-02":
+    "/Template/minimalis/minimal-02/index.html",
+
+  "minimal-03":
+    "/Template/minimalis/minimal-03/index.html"
+
+};
+
+const tujuan = templateMap[data.template_style];
       console.log(
         "template_style =",
         data.template_style
@@ -887,19 +906,21 @@ if (path.length > 0) {
         tujuan
       );
 
-      if (tujuan) {
+    if (tujuan) {
 
-        const to =
-          new URLSearchParams(location.search)
-          .get("to") || "";
+  const to =
+    new URLSearchParams(location.search)
+    .get("to") || "";
 
-        location.replace(
-          tujuan +
-          "?slug=" +
-          encodeURIComponent(slug) +
-          "&to=" +
-          encodeURIComponent(to)
-        );
+  location.replace(
+    tujuan +
+    "?slug=" +
+    encodeURIComponent(slug) +
+    "&to=" +
+    encodeURIComponent(to)
+  );
+
+}
 
       } else {
 
