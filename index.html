@@ -483,7 +483,6 @@ color:#777;
     inset 0 4px 4px 0 rgba(255, 255, 255, 0.5);
 }
 
-
 /* --- SETTINGAN MOBILE MEDIA QUERY --- */
 @media(max-width:900px){
 
@@ -653,9 +652,7 @@ Hubungi Kami
 
   </div>
 
-</section>
-
-<section class="stats">
+  <section class="stats">
 
 <div class="stats-box">
 
@@ -829,20 +826,31 @@ Minggu : Slow Respon
 import { createClient }
 from "https://esm.sh/@supabase/supabase-js";
 
-const supabase = createClient(
-const SUPABASE_URL = "https://rnqpesmyuwjxggaocpvr.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJucXBlc215dXdqeGdnYW9jcHZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTk3ODAsImV4cCI6MjA5NTc5NTc4MH0.70wVDCOHobScBYXM-tgPZosKcnZFf8Vgx5SfCIrh9mM"; // <-- Ganti dengan Anon Public Key Supabase-mu!
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const SUPABASE_URL =
+"https://rnqpesmyuwjxggaocpvr.supabase.co";
 
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJucXBlc215dXdqeGdnYW9jcHZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyMTk3ODAsImV4cCI6MjA5NTc5NTc4MH0.70wVDCOHobScBYXM-tgPZosKcnZFf8Vgx5SfCIrh9mM";
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
-const path = location.pathname.split("/").filter(Boolean);
+const path = location.pathname
+  .split("/")
+  .filter(Boolean);
 
-if(path.length > 0){
+console.log("pathname =", location.pathname);
+console.log("path =", path);
+
+if (path.length > 0) {
 
   const slug = path[0];
 
-  try{
+  console.log("slug =", slug);
+
+  try {
 
     const { data, error } = await supabase
       .from("undangan")
@@ -850,22 +858,36 @@ if(path.length > 0){
       .eq("slug", slug)
       .single();
 
-    if(error) throw error;
+    if (error) throw error;
 
-    if(data){
+    console.log("data =", data);
+
+    if (data) {
 
       const templateMap = {
+
         "Luxury Gold":
           "/Template/Tema-adat/Wayang-01/index.html",
 
         "Wayang 02":
           "/Template/Tema-adat/Wayang-02/index.html"
+
       };
 
       const tujuan =
         templateMap[data.template_style];
 
-      if(tujuan){
+      console.log(
+        "template_style =",
+        data.template_style
+      );
+
+      console.log(
+        "tujuan =",
+        tujuan
+      );
+
+      if (tujuan) {
 
         const to =
           new URLSearchParams(location.search)
@@ -873,16 +895,30 @@ if(path.length > 0){
 
         location.replace(
           tujuan +
-          "?slug=" + slug +
-          "&to=" + encodeURIComponent(to)
+          "?slug=" +
+          encodeURIComponent(slug) +
+          "&to=" +
+          encodeURIComponent(to)
+        );
+
+      } else {
+
+        console.error(
+          "Template tidak ditemukan:",
+          data.template_style
         );
 
       }
 
     }
 
-  }catch(err){
-    console.log(err);
+  } catch (err) {
+
+    console.error(
+      "Router Error:",
+      err
+    );
+
   }
 
 }
